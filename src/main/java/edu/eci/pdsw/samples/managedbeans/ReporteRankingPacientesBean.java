@@ -16,10 +16,68 @@
  */
 package edu.eci.pdsw.samples.managedbeans;
 
+import edu.eci.pdsw.samples.entities.Paciente;
+import edu.eci.pdsw.samples.services.ServicesFacade;
+import java.sql.Date;
+import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
 /**
  *
  * @author hcadavid
  */
+@ManagedBean(name = "Usuarios")
+@SessionScoped
 public class ReporteRankingPacientesBean {
+    ServicesFacade sf = ServicesFacade.getInstance("applicationconfig.properties");
+    int ranking = 0;
+    int fechaHora = 2016;
+    List<Paciente> p;
+    Paciente paciente;
+       
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+    
+    public List<Paciente> getP(){        
+        return p;
+    }
+        
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setRanking(int ranking) {
+        this.ranking = ranking;
+    }
+
+    public void setFechaHora(int fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public int getRanking() {
+        return ranking;
+    }
+
+    public int getFechaHora() {
+        return fechaHora;
+    }
+       
+    public void submit() {
+        FacesMessage message = null;
+        try{            
+            p = sf.topNPacientesPorAnyo(ranking, fechaHora);     
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Se ha consultado la informacion");
+        } catch(Exception e){
+            /*e.printStackTrace();*/
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!!", "No se ha podido consultar");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
     
 }

@@ -1,15 +1,73 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Reportes de comentarios negativos</title>
-    </h:head>
-    <h:body>
-        <h1>Reportes de comentarios negativos</h1>
-        <h:form>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head></h:head>
 
+    <h:body>
+        <h:form id="Pacientes">
+            <p:growl id="msgs" showDetail="true" />
+            <p:panel >
+                <p:dataTable id="table" var = "paciente" value="#{usuarios.p}">
+                    <f:facet name ="header">
+                        Usuarios
+                    </f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            Nombre
+                        </f:facet>
+                            #{paciente.nombre}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            Tipo de documento
+                        </f:facet>
+                            #{paciente.tipo_id}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            Numero de documento
+                        </f:facet>
+                            #{paciente.id}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            Numero de consultas
+                        </f:facet>
+                            #{paciente.consultas.size()}
+                    </p:column>                    
+                    <f:facet name="footer"> 
+                        <p:commandButton value="Consultar usarios" icon="ui-icon-circle-check" oncomplete="PF('detail').show()" />
+                    </f:facet>
+                </p:dataTable>
+                <p:dialog header="Consultar Usuario" widgetVar="detail" modal="true" showEffect="explode" hideEffect="drop" resizable="true" width="500">
+                    <h:panelGrid columns="2" cellpadding="2">
+                        <h:outputLabel for="ranking" value="Numero de resultados:" />
+                        <p:inputText id="resultaos" value="#{Usuarios.ranking}" required="true" label="ranking" />
+
+                        <h:outputLabel for="fechaHora" value="Año de consulta:" />
+                        <p:selectOneListbox id="basic" value="#{Usuarios.fechaHora}">
+                            <f:selectItem itemLabel="2016" itemValue="2016" />
+                            <f:selectItem itemLabel="2015" itemValue="2015" />
+                            <f:selectItem itemLabel="2014" itemValue="2014" />
+                            <f:selectItem itemLabel="2013" itemValue="2013" />
+                            <f:selectItem itemLabel="2012" itemValue="2012" />
+                            <f:selectItem itemLabel="2011" itemValue="2011" />
+                            <f:selectItem itemLabel="2010" itemValue="2010" />
+                            <f:selectItem itemLabel="2009" itemValue="2009" />
+                            <f:selectItem itemLabel="2008" itemValue="2008" />
+                            <f:selectItem itemLabel="2007" itemValue="2007" />
+                            <f:selectItem itemLabel="2006" itemValue="2006" />
+                        </p:selectOneListbox>                                       
+                                                
+                        <f:facet name="footer">
+                            <p:commandButton value="Submit" update=":Pacientes" oncomplete="PF('detail').hide()" actionListener="#{Usuarios.submit}"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </p:dialog>
+            </p:panel>
         </h:form>
     </h:body>
 </html>
