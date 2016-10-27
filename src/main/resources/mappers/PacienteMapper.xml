@@ -19,9 +19,10 @@
     </resultMap>
     
     <select id="getPacientes" resultMap="PacientesResult" parameterType="map">
-        select  pc.id, pc.tipo_id, pc.nombre, pc.fecha_nacimiento, cn.fecha_y_hora, cn.resumen, (select count(*) from CONSULTAS where PACIENTES_id=pc.id AND YEAR (fecha_y_hora)= #{year}) as numero
+        select  pc.id, pc.tipo_id, pc.nombre, pc.fecha_nacimiento, cn.fecha_y_hora, cn.resumen, (select count(*) from CONSULTAS where PACIENTES_id=pc.id AND YEAR (fecha_y_hora)= #{year})
         from PACIENTES as pc
         left join CONSULTAS as cn on PACIENTES_id=id and PACIENTES_tipo_id = tipo_id 
+        where YEAR (cn.fecha_y_hora)= #{year}
         order by 7 desc 
     </select>
 </mapper>

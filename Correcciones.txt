@@ -1,0 +1,3 @@
+Cambios realizados
+Correccion del index.html, no mostraba debido a que escribi usuarios en vez de Usuarios
+Correccion de la consulta para que no muestre los pacientes con 0 consultas ese año
